@@ -7,28 +7,30 @@ import numpy as np
 
 shuffle_data = True # option
 
-dataset_path  = 'data/train/laps.h5'
+dataset_path  = 'data/train/laps.h5' # h5 file is hierarchal data storage filetype
 ok_train_path = 'data/train/laps/ok/*.jpg'
 no_train_path = 'data/train/laps/no/*.jpg'
 
-ok_addrs = glob.glob(ok_train_path) # 0
+ok_addrs = glob.glob(ok_train_path) # 0 --- glob returns list of possibly matching filenames
 no_addrs = glob.glob(no_train_path) # 1
 
-addrs = ok_addrs + no_addrs
-labels = [[0, 1] if 'no' in addr else [1, 0] for addr in addrs]
+addrs = ok_addrs + no_addrs #append lists together
+labels = [[0, 1] if 'no' in addr else [1, 0] for addr in addrs] #?
 
+# shuffle data
 if shuffle_data:
 	c = list(zip(addrs, labels)); shuffle(c)
 	addrs, labels = zip(*c)
 
+# 
 train_addrs  = addrs[0:int(1 * len(addrs))]
 train_labels = labels[0:int(1 * len(labels))]
 train_shape  = (len(train_addrs), 21 * 21)
 
-hdf5_file = h5py.File(dataset_path, mode='w')
-hdf5_file.create_dataset("data", train_shape, np.int8)
-hdf5_file.create_dataset("labels", (len(train_addrs), 2), np.int8)
-hdf5_file["labels"][...] = train_labels
+hdf5_file = h5py.File(dataset_path, mode='w') # create h5 file
+hdf5_file.create_dataset("data", train_shape, np.int8) # create dataset with shape of training?
+hdf5_file.create_dataset("labels", (len(train_addrs), 2), np.int8) # create labels set with shape of addrs?
+hdf5_file["labels"][...] = train_labels # ?
 
 for i in range(len(train_addrs)):
 	if i % 10 == 0 and i > 1:

@@ -20,6 +20,6 @@ model.add(Flatten())
 
 # output
 model.add(Dense(2, activation='softmax'))
-model.compile(RMSprop(lr=0.001),
+model.compile(RMSprop(learning_rate=0.001),
               loss='categorical_crossentropy',
               metrics=['categorical_accuracy'])
