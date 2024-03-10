@@ -38,12 +38,12 @@ def train_network(model, X, Y, n=50):
 
 def load_model(name, best=False):
 	global NC_MODELS, NC_PATH_MODELS
-	model = NC_MODELS[name]['network']
+	model = NC_MODELS[name]['network'] #get model from hierarchy?
 	#best_path = NC_PATH_MODELS + '{}.weights.h5'.format(name.lower())
 	#if best and os.path.isfile(best_path):
 	#	model.load_weights(best_path)
-	best_path = NC_PATH_MODELS + '{}.h5'.format(name.lower())
-	if best and os.path.isfile(best_path):
+	best_path = NC_PATH_MODELS + '{}.h5'.format(name.lower()) # append path models with model?
+	if best and os.path.isfile(best_path): # test if file
 		model = keras.models.load_model(best_path)
 	return model
 
